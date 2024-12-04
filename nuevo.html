@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de Reporte de Equipo Médico</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Alta de Reporte de Equipo Médico</h2>
+        <form id="reporte-form">
+
+            <label for="fecha-reporte">Fecha del Reporte:</label>
+            <input type="date" id="fecha-reporte" name="fecha-reporte" required>
+
+            <label for="hora-equipo">Hora del Reporte:</label>
+            <input type="text" id="hora-equipo" name="hora-equipo" required>
+
+            <label for="reportado-por">Reportado por:</label>
+            <input type="text" id="reportado-por" name="reportado-por" required>
+
+
+            <label for="nombre-reporte">Nombre del Equipo:</label>
+            <select id="nombre-reporte" name="nombre-reporte" required>
+            <option value="Maquina">Máquina de Anestesia</option>
+            <option value="Camilla">Camilla</option>
+            <option value="Monitor">Monitor de signos vitales</option>
+            <option value="Electrocauerio">Electrocauterio</option>
+            <option value="Bascula">Bascula pesa bebes</option>
+            <option value="Bomba">Bomba infusomat</option>
+            <option value="Desfibrilador">Desfibrilador</option>
+            <option value="Electrocardiografo">Electrocardiográfo</option>
+            <option value="Incubadora">Incubadora</option>
+            <option value="Lampara">Lampara Led de techo</option>
+            <option value="Microspcopio">Microscopio</option>
+            <option value="Mesa">Mesa Quirúrgica</option>
+            <option value="Amplificador">Amplificador BIS</option>
+            <option value="Modulo">Modulo BIS</option>
+            <option value="Reanimador">Reanimador para bebes</option>
+            <option value="Torre">Torre de laparoscopia</option>
+            <option value="Vaporizador">Vaporizador</option>
+            <option value="Videolaringoscopio">Videolaringoscopio</option>
+            </select>
+
+
+
+            <label for="numero-identificacion">Número de Serie:</label>
+            <input type="text" id="numero-identificacion" name="numero-identificacion" required>
+
+            <label for="descripcion">Descripción del Problema:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+
+            <button type="button" onclick="guardarComoPDF()">Guardar como PDF</button>
+        </form>
+    </div>
+
+    <script>
+        async function guardarComoPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const horaEquipo = document.getElementById('hora-equipo').value;
+            const numeroIdentificacion = document.getElementById('numero-identificacion').value;
+
+            const descripcion = document.getElementById('descripcion').value;
+            const fechaReporte = document.getElementById('fecha-reporte').value;
+            const nombreReporte = document.getElementById('nombre-reporte').value;
+            const reportadoPor = document.getElementById('reportado-por').value;
+
+            doc.text("Reporte de Equipo Médico", 50, 10);
+            doc.text(`Fecha del Reporte: ${fechaReporte}`, 10, 20);
+            doc.text(`Hora del Equipo: ${horaEquipo}`, 10, 30);
+            doc.text(`Reportado por: ${reportadoPor}`, 10, 40);
+
+            doc.text(`Nombre del Reporte: ${nombreReporte}`, 10, 50);
+
+            doc.text(`Número de Identificacion: ${numeroIdentificacion}`, 10, 60);
+
+            doc.text(`Descripción: ${descripcion}`, 10, 70);
+ 
+
+
+
+            doc.save('reporte_equipo_medico.pdf');
+        }
+    </script>
+</body>
+</html>
